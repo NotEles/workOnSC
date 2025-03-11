@@ -37,6 +37,7 @@ namespace MAtrix
                 int val = m.ma[0,temc];
                 int temr = 0;
                 int temcc = temc;
+                //有更好对比方式，每个和左上对比，以及这次算法没考虑(2.1)对(3,2)
                 while(temr<r &&temcc<c)//这里用一个返回bool的函数说不定比较好，可以提前return而不是多break返回
                 {
                     

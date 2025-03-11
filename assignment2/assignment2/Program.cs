@@ -11,6 +11,8 @@ namespace SeekPrime
             {
                 Console.WriteLine("illegal input");
             }
+            //校验>1
+            //独立分块
             int[] result = new int[num];
             int index = 0;
             for(int i=2;i<=num;i++)

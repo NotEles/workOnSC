@@ -2,6 +2,7 @@
 
 namespace arrdeal
 {
+    //单函数用out类型输出
     class arrdeal
     {
         public int[] arr;
