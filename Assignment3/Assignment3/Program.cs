@@ -4,18 +4,22 @@ namespace Pro
 {
     class Pro
     {
+        //分开为多个cs文件
         interface IsValid
         {
-            public bool valid();
+            public bool valid()
+            { return false; }
         }
         abstract class Shape:IsValid
         {
+            //double Area{get;}再研究下属性!
+            //由于area计算简单，没必要单独空出位置保存。
             public abstract double getArea();
-            public bool valid() { return true; }
+            public abstract bool valid();
         }
         class Triangle : Shape
         {
-            private int[] side;
+            private int[] side;//double sides?
             public Triangle(int a,int b,int c)
             {
                 side = new int[] { a, b, c };
@@ -26,7 +30,7 @@ namespace Pro
                 double p = (side[0] + side[1] + side[2]) / 2.0;
                 return Math.Sqrt(p * (p - side[0]) * (p - side[1]) * (p - side[2]));
             }
-            public bool valid()
+            public override bool valid()
             {
                 return (side[0] > 0) & (side[1] > 0) & (side[2] > 0) & (side[0] + side[1] > side[2]) & (side[1] + side[2] > side[0]) & (side[0] + side[2] > side[1]);
             }
@@ -45,7 +49,7 @@ namespace Pro
             {
                 return length * width;
             }
-            public bool valid()
+            public override bool valid()
             {
                 return (length > 0) & (width > 0);
             }

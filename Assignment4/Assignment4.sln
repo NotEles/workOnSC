@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35806.99
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "List", "Assignment4\List.csproj", "{46498D01-77F3-453D-92EE-C0D6E6B94FD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clock", "clock\clock.csproj", "{4F4D9941-8B0E-41ED-9B78-138D7910C066}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46498D01-77F3-453D-92EE-C0D6E6B94FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46498D01-77F3-453D-92EE-C0D6E6B94FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46498D01-77F3-453D-92EE-C0D6E6B94FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46498D01-77F3-453D-92EE-C0D6E6B94FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F4D9941-8B0E-41ED-9B78-138D7910C066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F4D9941-8B0E-41ED-9B78-138D7910C066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F4D9941-8B0E-41ED-9B78-138D7910C066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F4D9941-8B0E-41ED-9B78-138D7910C066}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23FF2032-903A-4E2F-BB25-A75F17A57CE4}
+	EndGlobalSection
+EndGlobal
