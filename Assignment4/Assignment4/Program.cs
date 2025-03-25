@@ -2,44 +2,37 @@
 
 class Node<T>
 {
-    public T Data;
-    public Node<T>? Next;
-
-    public Node(T data)
+    public T val { get; set; }
+    public Node<T>? next;
+    public Node(T val, Node<T>? next)
     {
-        Data = data;
-        Next = null;
+        this.val = val;
+        this.next = next;
     }
 }
 
-class LinkedList<T>
+class List<T>
 {
-    private Node<T>? head;
-
-    public void Add(T data)
+    public Node<T>? head;
+    public int len;
+    public List()
     {
-        if (head == null)
-        {
-            head = new Node<T>(data);
-        }
-        else
-        {
-            Node<T> current = head;
-            while (current.Next != null)
-            {
-                current = current.Next;
-            }
-            current.Next = new Node<T>(data);
-        }
+        this.head = null;
+        this.len = 0;
     }
-
-    public void ForEach(Action<T> action)
+    public void add(T t)
     {
-        Node<T>? current = head;
-        while (current != null)
+        Node<T> node = new Node<T>(t, null);
+        node.next = this.head;
+        head = node;
+    }
+    public void forEach(Action<T> action)
+    {
+        Node<T>? tem = head;
+        while(tem!=null)
         {
-            action(current.Data);
-            current = current.Next;
+            action(tem.val);
+            tem = tem.next;
         }
     }
 }
@@ -48,30 +41,26 @@ class Program
 {
     static void Main()
     {
-        LinkedList<int> list = new LinkedList<int>();
-        list.Add(10);
-        list.Add(20);
-        list.Add(5);
-        list.Add(30);
+        List<int> list = new List<int>();
+        list.add(10);
+        list.add(20);
+        list.add(5);
+        list.add(30);
 
-        
-        Console.WriteLine("链表元素:");
-        list.ForEach(item => Console.Write(item + " "));
-        Console.WriteLine();
+        Console.WriteLine("the list includes:");
+        list.forEach(item => Console.Write($"{item} "));
+        Console.WriteLine("\n");
 
-        
-        int max = int.MinValue;
-        list.ForEach(item => max = item > max ? item : max);
-        Console.WriteLine("最大值: " + max);
+        int max = list.head.val;
+        list.forEach(item => max = item > max ? item : max);
+        Console.WriteLine($"max = {max}");
 
-        
-        int min = int.MaxValue;
-        list.ForEach(item => min = item < min ? item : min);
-        Console.WriteLine("最小值: " + min);
-
-        
         int sum = 0;
-        list.ForEach(item => sum += item);
+        list.forEach(item => sum += item);
         Console.WriteLine("总和: " + sum);
+
+        int min = int.MaxValue;
+        list.forEach(item => min = item < min ? item : min);
+        Console.WriteLine("最小值: " + min);
     }
 }
