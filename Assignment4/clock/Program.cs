@@ -1,6 +1,61 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
+using System.Security;
 using System.Timers;
 
+class Clock
+{
+    private int seconds;
+    private int alarm;
+    public event Action tick;
+    public event Action ring;
+    public void iniSet(int i)
+    {
+        seconds = i;
+    }
+    public void alaSet(int i)
+    {
+        alarm = i;
+    }
+    public void walk()
+    {
+        seconds++;
+        
+        tick();
+    }
+    public bool ifRing()
+    {
+        if (seconds == alarm)
+            ring();
+        return seconds == alarm;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Clock myclock = new Clock();
+        myclock.iniSet(0);
+        myclock.alaSet(10);
+        myclock.tick += ()=>Console.WriteLine("ticking...");
+        myclock.ring += () => Console.WriteLine("ringing!");
+        
+        while (!myclock.ifRing())
+        {
+            myclock.walk();
+        }
+        Console.WriteLine("See you space cowboy");
+    }
+}
+
+
+
+
+
+
+
+/*
 class AlarmClock
 {
     public event Action? Tick;  // 嘀嗒事件
@@ -75,3 +130,4 @@ class Program
         Console.ReadLine();
     }
 }
+*/
