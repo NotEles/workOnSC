@@ -3,32 +3,35 @@
 namespace WInform
 {
 
-  public class Customer {
+    public class Customer
+    {
+        public string ID { get; set; }
+        public string Name { get; set; }
 
-    public int Id { get; set; }
+        public Customer()
+        {
+        }
 
-    public string Name { get; set; }
+        public Customer(string iD, string name)
+        {
+            ID = iD;
+            Name = name;
+        }
 
-    public Customer() { }
+        public override bool Equals(object obj)
+        {
+            var customer = obj as Customer;
+            return customer != null &&
+                   ID == customer.ID &&
+                   Name == customer.Name;
+        }
 
-    public Customer(int id, string name) {
-      this.Id = id;
-      this.Name = name;
+        public override int GetHashCode()
+        {
+            var hashCode = 1479869798;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ID);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            return hashCode;
+        }
     }
-
-    public override string ToString() {
-      return $"customerId:{Id}, CustomerName:{Name}";
-    }
-
-    public override bool Equals(object obj) {
-      var customer = obj as Customer;
-      return customer != null && Id == customer.Id;
-    }
-
-    public override int GetHashCode() {
-      return 2108858624 + Id.GetHashCode();
-    }
-
-
-  }
 }

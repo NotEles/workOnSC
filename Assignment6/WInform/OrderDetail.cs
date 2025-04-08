@@ -7,37 +7,55 @@ using System.Threading.Tasks;
 namespace WInform
 {
 
-  /**
-   **/
-  public class OrderDetail {
+    /**
+     **/
+    public class OrderDetail
+    {
 
-    public Product Product { get; set; }
+        public int Index { get; set; } //序号
 
-    public int Quantity { get; set; }
+        public Product ProductItem { get; set; }
 
-    public float TotalPrice {
-      get => Product.Price * Quantity;
+        public String ProductName { get => ProductItem != null ? this.ProductItem.Name : ""; }
+
+        public double UnitPrice { get => ProductItem != null ? this.ProductItem.Price : 0.0; }
+
+
+        public int Quantity { get; set; }
+
+        public OrderDetail() { }
+
+        public OrderDetail(int index, Product goods, int quantity)
+        {
+            this.Index = index;
+            this.ProductItem = goods;
+            this.Quantity = quantity;
+        }
+
+        public double TotalPrice
+        {
+            get => ProductItem == null ? 0.0 : ProductItem.Price * Quantity;
+        }
+
+        public override string ToString()
+        {
+            return $"[No.:{Index},product:{ProductName},quantity:{Quantity},totalPrice:{TotalPrice}]";
+        }
+
+        public override bool Equals(object obj)
+        {
+            var item = obj as OrderDetail;
+            return item != null &&
+                   ProductName == item.ProductName;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -2127770830;
+            hashCode = hashCode * -1521134295 + Index.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ProductName);
+            hashCode = hashCode * -1521134295 + Quantity.GetHashCode();
+            return hashCode;
+        }
     }
-
-    public OrderDetail() {}
-
-    public OrderDetail(Product product, int quantity) {
-      this.Product = product;
-      this.Quantity = quantity;
-    }
-
-    public override bool Equals(object obj) {
-      var detail = obj as OrderDetail;
-      return detail != null &&
-             EqualityComparer<Product>.Default.Equals(Product, detail.Product);
-    }
-
-    public override int GetHashCode() {
-      return 785010553 + EqualityComparer<Product>.Default.GetHashCode(Product);
-    }
-
-    public override string ToString() {
-      return $"OrderDetail:{Product},{Quantity}";
-    }
-  }
 }

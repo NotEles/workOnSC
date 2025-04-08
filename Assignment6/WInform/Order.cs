@@ -10,62 +10,80 @@ namespace WInform
 
     /**
      **/
-    public class Order : IComparable<Order> {
+    public class Order : IComparable<Order>
+    {
 
-        private readonly List<OrderDetail> details = new List<OrderDetail>();
+        private List<OrderDetail> details;
 
-        public int Id { get; set; }
+        public int OrderId { get; set; }
 
         public Customer Customer { get; set; }
 
+        public string CustomerName { get => (Customer != null) ? Customer.Name : ""; }
+
         public DateTime CreateTime { get; set; }
 
-        public float TotalPrice {
-            get => Details.Sum(d => d.TotalPrice);
+
+        public Order() { details = new List<OrderDetail>(); CreateTime = DateTime.Now; }
+
+        public Order(int orderId, Customer customer, List<OrderDetail> items)
+        {
+            this.OrderId = orderId;
+            this.Customer = customer;
+            this.CreateTime = DateTime.Now;
+            this.details = (items == null) ? new List<OrderDetail>() : items;
         }
 
-        public List<OrderDetail> Details => details;
-
-        public Order() {
-            CreateTime = DateTime.Now;
+        public List<OrderDetail> Details
+        {
+            get { return details; }
         }
 
-        public Order(int orderId, Customer customer, DateTime creatTime) {
-            Id = orderId;
-            Customer = customer;
-            CreateTime = creatTime;
+        public double TotalPrice
+        {
+            get => details.Sum(item => item.TotalPrice);
         }
 
-        public void AddDetails(OrderDetail orderDetail) {
-            if (Details.Contains(orderDetail)) {
-                throw new ApplicationException($"The product ({orderDetail.Product.Name}) already exists in order {Id}");
-            }
-            Details.Add(orderDetail);
+        public void AddDetail(OrderDetail orderItem)
+        {
+            if (Details.Contains(orderItem))
+                throw new ApplicationException($"添加错误：订单项{orderItem.ProductName} 已经存在!");
+            Details.Add(orderItem);
         }
 
-        public int CompareTo(Order other) {
-            return (other == null)?1: Id - other.Id;
+        public void RemoveDetail(OrderDetail orderItem)
+        {
+            Details.Remove(orderItem);
         }
 
-        public override bool Equals(object obj) {
+        public override string ToString()
+        {
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.Append($"Id:{OrderId}, customer:{Customer},orderTime:{CreateTime},totalPrice：{TotalPrice}");
+            details.ForEach(od => strBuilder.Append("\n\t" + od));
+            return strBuilder.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
             var order = obj as Order;
-            return order != null && Id == order.Id;
+            return order != null &&
+                   OrderId == order.OrderId;
         }
 
-        public override int GetHashCode() {
-            return Id.GetHashCode();
+        public override int GetHashCode()
+        {
+            var hashCode = -531220479;
+            hashCode = hashCode * -1521134295 + OrderId.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(CustomerName);
+            hashCode = hashCode * -1521134295 + CreateTime.GetHashCode();
+            return hashCode;
         }
 
-        public void RemoveDetails(int num) {
-            Details.RemoveAt(num);
+        public int CompareTo(Order other)
+        {
+            if (other == null) return 1;
+            return this.OrderId.CompareTo(other.OrderId);
         }
-
-        public override string ToString() {
-            StringBuilder result = new StringBuilder();
-            result.Append($"orderId:{Id}, customer:({Customer})");
-            Details.ForEach(detail => result.Append("\n\t" + detail));
-            return result.ToString();
-        }
-
     }
 }

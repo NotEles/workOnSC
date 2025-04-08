@@ -3,34 +3,37 @@
 namespace WInform
 {
 
-  public class Product {
+    public class Product
+    {
+        public string ID { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
 
-    public int Id { get; set; }
+        public Product()
+        {
+        }
 
-    public string Name { get; set; }
+        public Product(string iD, string name, double price)
+        {
+            ID = iD;
+            Name = name;
+            Price = price;
+        }
 
-    public float Price { get; set; }
+        public override bool Equals(object obj)
+        {
+            var product = obj as Product;
+            return product != null &&
+                   ID == product.ID &&
+                   Name == product.Name;
+        }
 
-    public Product() { }
-
-    public Product(int id, string name, float price) {
-      this.Id = id;
-      this.Name = name;
-      this.Price = price;
+        public override int GetHashCode()
+        {
+            var hashCode = 1479869798;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ID);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            return hashCode;
+        }
     }
-
-    public override bool Equals(object obj) {
-      var product = obj as Product;
-      return product != null && Id == product.Id;
-    }
-
-    public override int GetHashCode() {
-      return 2108858624 + Id.GetHashCode();
-    }
-
-    public override string ToString() {
-      return $"Id:{Id}, Name:{Name}, Value:{Price}";
-    }
-
-  }
 }
