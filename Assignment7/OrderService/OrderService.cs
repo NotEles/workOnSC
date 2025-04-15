@@ -59,10 +59,21 @@ namespace OrderApp {
                 }
             }
         }
+        public List<Product> ProductList
+        {
+            get
+            {
+                using (var ctx = new OrderContext())
+                {
+                    return ctx.Goods
+                    .ToList();
+                }
+            }
+        }
         //here
 
         public List<Order> GetAllOrders() {
-            return orders;
+            return Orders;
         }
 
 

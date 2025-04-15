@@ -1,4 +1,5 @@
-﻿using OrderApp;
+﻿using Mysqlx.Crud;
+using OrderApp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,10 +15,10 @@ namespace OrderForm {
         private OrderService orderService;
         public bool EditFlag { get; set; }
 
-        public Order CurrentOrder { get; set; }
+        public OrderApp.Order CurrentOrder { get; set; }
         public event Action<FormEdit> CloseEditFrom = (f => { });
 
-        public FormEdit(Order order, bool editFlag, OrderService orderService) {
+        public FormEdit(OrderApp.Order order, bool editFlag, OrderService orderService) {
             InitializeComponent();
             bdsCustomers.DataSource=orderService.CustomerList;
             
@@ -37,7 +38,7 @@ namespace OrderForm {
         }
 
         private void btnAddDetail_Click(object sender, EventArgs e) {
-            FormDetailEdit formDetailEdit = new FormDetailEdit(new OrderDetail());
+            FormDetailEdit formDetailEdit = new FormDetailEdit(new OrderDetail(),orderService);
             try {
                 if (formDetailEdit.ShowDialog() == DialogResult.OK) {
                     int index = 0;
@@ -60,7 +61,7 @@ namespace OrderForm {
                 if (this.EditFlag) {
                     orderService.UpdateOrder(CurrentOrder);
                 } else {
-                    
+                    CurrentOrder.Customer = bdsCustomers.Current as Customer;
                     orderService.AddOrder(CurrentOrder);
                 }
                 CloseEditFrom(this);
@@ -84,7 +85,7 @@ namespace OrderForm {
                 MessageBox.Show("请选择一个订单项进行修改");
                 return;
             }
-            FormDetailEdit formDetailEdit = new FormDetailEdit(detail);
+            FormDetailEdit formDetailEdit = new FormDetailEdit(detail,orderService);
             if (formDetailEdit.ShowDialog() == DialogResult.OK) {
                 bdsDetails.ResetBindings(false);
             }

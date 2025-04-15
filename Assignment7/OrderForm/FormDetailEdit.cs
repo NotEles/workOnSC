@@ -17,11 +17,10 @@ namespace OrderForm {
       InitializeComponent();
     }
 
-    public FormDetailEdit(OrderDetail detail):this() {
+    public FormDetailEdit(OrderDetail detail,OrderService os):this() {
       this.Detail = detail;
       this.bdsDetail.DataSource = detail;
-      bdsGoods.Add(new Product( "apple", 100.0));
-      bdsGoods.Add(new Product( "egg", 200.0));
+            bdsGoods.DataSource = os.ProductList;
     }
 
     private void btnOK_Click(object sender, EventArgs e) {
